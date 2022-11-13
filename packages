@@ -20,6 +20,7 @@ zathura
 picom
 rofi
 xsettingsd
+krita
 
 fonts
 poppins regular
@@ -27,3 +28,5 @@ klartext mono regular
 
 themes
 Gruvbox-Material-Dark
+
+hblock
