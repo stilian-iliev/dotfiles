@@ -2,7 +2,7 @@
 // @name         Return YouTube Dislike
 // @namespace    https://www.returnyoutubedislike.com/
 // @homepage     https://www.returnyoutubedislike.com/
-// @version      3.0.1
+// @version      3.1.0
 // @encoding     utf-8
 // @description  Return of the YouTube Dislike, Based off https://www.returnyoutubedislike.com/
 // @icon         https://github.com/Anarios/return-youtube-dislike/raw/main/Icons/Return%20Youtube%20Dislike%20-%20Transparent.png
@@ -15,6 +15,8 @@
 // @compatible   opera
 // @compatible   safari
 // @compatible   edge
+// @downloadURL  https://github.com/Anarios/return-youtube-dislike/raw/main/Extensions/UserScript/Return%20Youtube%20Dislike.user.js
+// @updateURL    https://github.com/Anarios/return-youtube-dislike/raw/main/Extensions/UserScript/Return%20Youtube%20Dislike.user.js
 // @grant        GM.xmlHttpRequest
 // @connect      youtube.com
 // @grant        GM_addStyle
@@ -80,10 +82,16 @@ function getButtons() {
     }
   }
   if (isMobile) {
-    return document.querySelector(".slim-video-action-bar-actions");
+    return (
+      document.querySelector(".slim-video-action-bar-actions .segmented-buttons") ??
+      document.querySelector(".slim-video-action-bar-actions")
+    );
   }
   if (document.getElementById("menu-container")?.offsetParent === null) {
-    return document.querySelector("ytd-menu-renderer.ytd-watch-metadata > div");
+    return (
+      document.querySelector("ytd-menu-renderer.ytd-watch-metadata > div") ??
+      document.querySelector("ytd-menu-renderer.ytd-video-primary-info-renderer > div")
+    );
   } else {
     return document
       .getElementById("menu-container")
@@ -92,26 +100,40 @@ function getButtons() {
 }
 
 function getLikeButton() {
-  return getButtons().children[0];
+  return getButtons().children[0].tagName ===
+    "YTD-SEGMENTED-LIKE-DISLIKE-BUTTON-RENDERER"
+    ? getButtons().children[0].children[0]
+    : getButtons().children[0];
 }
 
 function getLikeTextContainer() {
   return (
     getLikeButton().querySelector("#text") ??
-    getLikeButton().getElementsByTagName("yt-formatted-string")[0] ??
-    getLikeButton().querySelector("span[role='text']")
+    getLikeButton().getElementsByTagName("yt-formatted-string")[0]
   );
 }
 
 function getDislikeButton() {
-  return getButtons().children[1];
+  return getButtons().children[0].tagName ===
+    "YTD-SEGMENTED-LIKE-DISLIKE-BUTTON-RENDERER"
+    ? getButtons().children[0].children[1]
+    : getButtons().children[1];
 }
 
 function getDislikeTextContainer() {
-  return (
+  let result =
     getDislikeButton().querySelector("#text") ??
-    getDislikeButton().getElementsByTagName("yt-formatted-string")[0]
-  );
+    getDislikeButton().getElementsByTagName("yt-formatted-string")[0] ??
+    getDislikeButton().querySelector("span[role='text']")
+  if (result === null) {
+    let textSpan = document.createElement("span");
+    textSpan.id = "text";
+    textSpan.style.marginLeft = "2px";
+    getDislikeButton().querySelector("button").appendChild(textSpan);
+    getDislikeButton().querySelector("button").style.width = "auto";
+    result = getDislikeButton().querySelector("#text");
+  }
+  return result;
 }
 
 let mutationObserver = new Object();
@@ -226,34 +248,26 @@ function setDislikes(dislikesCount) {
 }
 
 function getLikeCountFromButton() {
-  try {
-    if (isShorts()) {
-      //Youtube Shorts don't work with this query. It's not necessary; we can skip it and still see the results.
-      //It should be possible to fix this function, but it's not critical to showing the dislike count.
-      return false;
-    }
-    let likeButton = getLikeButton()
-    .querySelector("yt-formatted-string#text") ??
-    getLikeButton().querySelector("button");
-
-    let likesStr = likeButton.getAttribute("aria-label")
-    .replace(/\D/g, "");
-    return likesStr.length > 0 ? parseInt(likesStr) : false;
-  }
-  catch {
+  if (isShorts()) {
+    //Youtube Shorts don't work with this query. It's not nessecary; we can skip it and still see the results.
+    //It should be possible to fix this function, but it's not critical to showing the dislike count.
     return false;
   }
-
+  let likesStr = getLikeButton()
+    .querySelector("yt-formatted-string#text")
+    .getAttribute("aria-label")
+    .replace(/\D/g, "");
+  return likesStr.length > 0 ? parseInt(likesStr) : false;
 }
 
 (typeof GM_addStyle != "undefined"
   ? GM_addStyle
   : (styles) => {
-      let styleNode = document.createElement("style");
-      styleNode.type = "text/css";
-      styleNode.innerText = styles;
-      document.head.appendChild(styleNode);
-    })(`
+    let styleNode = document.createElement("style");
+    styleNode.type = "text/css";
+    styleNode.innerText = styles;
+    document.head.appendChild(styleNode);
+  })(`
     #return-youtube-dislike-bar-container {
       background: var(--yt-spec-icon-disabled);
       border-radius: 2px;
@@ -605,7 +619,7 @@ function setEventListeners(evt) {
   let jsInitChecktimer;
 
   function checkForJS_Finish() {
-    console.log();
+    //console.log();
     if (isShorts() || (getButtons()?.offsetParent && isVideoLoaded())) {
       const buttons = getButtons();
 
@@ -643,7 +657,12 @@ if (isMobile) {
     return originalPush.apply(history, args);
   };
   setInterval(() => {
-    getDislikeButton().querySelector(".button-renderer-text").innerText =
-      mobileDislikes;
+    if (getDislikeButton().querySelector(".button-renderer-text") === null) {
+      getDislikeTextContainer().innerText = mobileDislikes;
+    }
+    else {
+      getDislikeButton().querySelector(".button-renderer-text").innerText =
+        mobileDislikes;
+    }
   }, 1000);
 }

@@ -279,3 +279,20 @@ wmname = "LG3D"
 def autostart():
     home = os.path.expanduser('~/.config/qtile/autostart.sh')
     subprocess.run([home])
+
+
+# Icons only
+# groups = [
+#     Group(""),
+#     Group(""),
+#     Group(""),
+#     Group(""),
+#     Group(""),
+#     Group(""),
+#     Group(""),
+#     Group("λ"),
+#     Group(""),
+#     Group(""),
+# ]
+
+# browser, terminal, ranger-monadtall, discord, vim-stack, steam/lutris-stack/league, home, imageviewer/documentviewer
