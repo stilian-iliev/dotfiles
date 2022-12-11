@@ -1,0 +1,14 @@
+pc
+	reinstall tubmleweed
+		qtile
+
+server
+	docker
+		jellyfin
+		radarr
+		sonarr
+		jackett
+		qbittorrent
+		pihole
+		money manager
+	

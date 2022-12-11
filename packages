@@ -1,3 +1,5 @@
+qtile
+
 lightdm
 archive manager 
 nnn/ranger
@@ -13,7 +15,6 @@ mpv
 discord
 spotify
 obs
-polychromatic
 redshift
 man
 zathura
@@ -22,14 +23,11 @@ rofi
 xsettingsd
 krita
 mpd
-archive manager
 opi
+qutebrowser
 
 fonts
 poppins regular
 klartext mono regular
-
-themes
-Gruvbox-Material-Dark
 
 hblock
