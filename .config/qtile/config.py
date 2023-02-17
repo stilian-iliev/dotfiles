@@ -29,8 +29,8 @@ terminal = "kitty"
 # terminal = guess_terminal()
 
 keys = [
-    Key([mod, "control"], "1", lazy.to_screen(0)),
-    Key([mod, "control"], "2", lazy.to_screen(1)),
+    # Key([mod], "[", lazy.to_screen(0)),
+    # Key([mod], "]", lazy.to_screen(1)),
 
     # Launch applications
     Key([mod], "w", lazy.spawn('firefox'), desc="Launch browser"),
@@ -162,9 +162,11 @@ groups = [
 for i in groups:
     keys.extend([
         # mod1 + letter of group = switch to group
-        Key([mod], i.name, lazy.group[i.name].toscreen(),
+        Key([mod], i.name, lazy.group[i.name].toscreen(0),
             desc="Switch to group {}".format(i.name)),
-
+	
+	Key([mod, "control"], i.name, lazy.group[i.name].toscreen(1)),
+	
         # Key([mod], i.name, lazy.function(go_to_group(i.name))),
 
         # Or, use below if you prefer not to switch to that group.
@@ -260,7 +262,12 @@ widget_defaults = dict(
 extension_defaults = widget_defaults.copy()
 
 screens = [
-    Screen(top=bar)
+    Screen(top=bar,
+    wallpaper='~/.config/qtile/1651314815321.jpg',
+    wallpaper_mode='stretch'),
+    Screen(
+    wallpaper='~/.config/qtile/1651314815321.jpg',
+    wallpaper_mode='fill')
 ]
 
 dgroups_key_binder = None
