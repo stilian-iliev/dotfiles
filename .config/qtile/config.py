@@ -23,34 +23,41 @@ from libqtile.lazy import lazy
 from colors import gruvbox
 
 from bar1 import bar
+from bar1s import bar_small
 
 mod = "mod4"
 terminal = "kitty"
 # terminal = guess_terminal()
 
 keys = [
-    # Key([mod], "[", lazy.to_screen(0)),
-    # Key([mod], "]", lazy.to_screen(1)),
+    Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
+    Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+
+    Key([mod], "x", lazy.to_screen(0)),
+    Key([mod], "z", lazy.to_screen(1)),
 
     # Launch applications
-    Key([mod], "w", lazy.spawn('firefox'), desc="Launch browser"),
-    # Key([mod], "e", lazy.spawn('kitty -e nnn -d -a -S'),
-    #     desc="Launch nnn in home directory"),
+    Key([mod], "w", lazy.spawn('qutebrowser'), desc="Launch browser"),
+    Key([mod], "e", lazy.spawn('kitty -e nnn -d -a -S'),
+        desc="Launch nnn in home directory"),
     Key([mod], "d", lazy.spawn('discord'), desc="Launch discord"),
     Key([mod], "s", lazy.spawn('obs'), desc="Launch OBS"),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+    Key([mod], "q", lazy.spawn('gksu yast2')),
 
-    # Command prompt
+    Key(["mod1", "shift"], "space", lazy.widget["keyboardlayout"].next_keyboard(), desc="Next keyboard layout."),
+
+    # Command promptьь
     # Key([mod], "p", lazy.spawncmd(),
-    #     desc="Spawn a command using a prompt widget"),
+    #     desc="Spawn a command using a prompt widget"),ьььь
 
     # DmenuRun
-    Key([mod], 'p', lazy.run_extension(DmenuRun(
+    Key([mod], 'r', lazy.run_extension(DmenuRun(
         font="TerminessTTF Nerd Font",
         fontsize="13",
         dmenu_command="dmenu_run",
         dmenu_prompt=" ",
-        dmenu_height=10,
+        # dmenu_height=10,
         dmenu_lines=15,
         background=gruvbox['bg'],
         foreground=gruvbox['fg'],
@@ -63,8 +70,8 @@ keys = [
         font="TerminessTTF Nerd Font",
         fontsize="13",
         dmenu_prompt=" ",
-        dmenu_height=10,
-        # dmenu_lines=15,
+        # dmenu_height=10,
+        dmenu_lines=15,
         background=gruvbox['bg'],
         foreground=gruvbox['fg'],
         selected_foreground=gruvbox['dark-blue'],
@@ -82,7 +89,7 @@ keys = [
         foreground=gruvbox['fg'],
         dmenu_prompt=' ',
         dmenu_lines=10,
-        dmenu_height=10,
+        # dmenu_height=10,
         selected_foreground=gruvbox['blue'],
         selected_background=gruvbox['bg'],
     ))),
@@ -90,8 +97,8 @@ keys = [
     # Toggle floating and fullscreen
     Key([mod], "f", lazy.window.toggle_fullscreen(),
         desc="Toggle fullscreen mode"),
-    Key([mod, "shift"], "space", lazy.window.toggle_floating(),
-        desc="Toggle fullscreen mode"),
+    # Key([mod], "space", lazy.window.toggle_floating(),
+    #     desc="Toggle fullscreen mode"),
 
     # Keybindings for resizing windows in MonadTall layout
     Key([mod], "i", lazy.layout.grow()),
@@ -105,7 +112,7 @@ keys = [
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    Key([mod], "space", lazy.layout.next(),
+    Key([mod], "Tab", lazy.layout.next(),
         desc="Move window focus to other window"),
 
     # Move windows between left/right columns or move up/down in current stack.
@@ -126,8 +133,8 @@ keys = [
         desc="Grow window to the right"),
     Key([mod, "control"], "j", lazy.layout.grow_down(),
         desc="Grow window down"),
-    Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
-    Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
+    # Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
+    # Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
 
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
@@ -137,11 +144,10 @@ keys = [
         desc="Toggle between split and unsplit sides of stack"),
 
     # Toggle between different layouts as defined below
-    Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
+    Key([mod, "shift"], "space", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod, "shift"], "c", lazy.window.kill(), desc="Kill focused window"),
 
-    Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
-    Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+
 ]
 
 groups = [
@@ -165,7 +171,7 @@ for i in groups:
         Key([mod], i.name, lazy.group[i.name].toscreen(0),
             desc="Switch to group {}".format(i.name)),
 	
-	Key([mod, "control"], i.name, lazy.group[i.name].toscreen(1)),
+        Key([mod, "control"], i.name, lazy.group[i.name].toscreen(1)),  
 	
         # Key([mod], i.name, lazy.function(go_to_group(i.name))),
 
@@ -265,7 +271,7 @@ screens = [
     Screen(top=bar,
     wallpaper='~/.config/qtile/1651314815321.jpg',
     wallpaper_mode='stretch'),
-    Screen(
+    Screen(top=bar_small,
     wallpaper='~/.config/qtile/1651314815321.jpg',
     wallpaper_mode='fill')
 ]
@@ -287,6 +293,7 @@ def autostart():
     home = os.path.expanduser('~/.config/qtile/autostart.sh')
     subprocess.run([home])
 
+follow_mouse_focus = False
 
 # Icons only
 # groups = [

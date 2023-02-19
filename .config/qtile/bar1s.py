@@ -11,12 +11,11 @@ from libqtile.widget.window_count import WindowCount
 from libqtile.widget.windowname import WindowName
 from libqtile.widget.volume import Volume
 from libqtile.widget.crypto_ticker import CryptoTicker
-from libqtile.widget.keyboardlayout import KeyboardLayout
 
 from unicodes import right_arrow, left_arrow
 from colors import gruvbox
 
-bar = Bar([
+bar_small = Bar([
     GroupBox(
         disable_drag=True,
         active=gruvbox['gray'],
@@ -44,40 +43,21 @@ bar = Bar([
     right_arrow(gruvbox['bg'], gruvbox['bg0']),
     WindowName(foreground=gruvbox['fg']),
 
+    # left_arrow(gruvbox['bg'], gruvbox['fg1']),
+
+    # left_arrow(gruvbox['fg1'], gruvbox['fg2']),
+
+
+    # left_arrow(gruvbox['fg2'], gruvbox['fg3']),
+
     left_arrow(gruvbox['bg'], gruvbox['fg1']),
-
-    CryptoTicker(
-        background=gruvbox['fg1'],
-        foreground=gruvbox['dark-green']
-    ),
-
-    left_arrow(gruvbox['fg1'], gruvbox['fg2']),
-    Memory(
-        format='󰍛 {MemUsed: .0f}{mm}/{MemTotal: .0f}{mm}',
-        background=gruvbox['fg2'],
-        foreground=gruvbox['yellow']
-    ),
-
-    left_arrow(gruvbox['fg2'], gruvbox['fg3']),
-
-    KeyboardLayout(configured_keyboards=['us', 'bg'],
-        background=gruvbox['fg3'],
-        foreground=gruvbox['dark-blue']),
-
-    Volume(background=gruvbox['fg3'],
-        foreground=gruvbox['dark-blue']),
-
-    left_arrow(gruvbox['fg3'], gruvbox['bg0']),
     Clock(
-        background=gruvbox['bg0'],
+        background=gruvbox['fg1'],
         foreground=gruvbox['dark-magenta'],
         format=' %Y-%m-%d %a %I:%M %p'
     ),
 
-    left_arrow(gruvbox['bg0'], gruvbox['fg0']),
-    Systray(
-        background=gruvbox['fg0']
-    ),
+    # left_arrow(gruvbox['bg0'], gruvbox['fg0']),
 
-    Spacer(length=20, background=gruvbox['fg0'])
+    # Spacer(length=20, background=gruvbox['bg0'])
 ], background=gruvbox['bg'], size=26, margin=9)

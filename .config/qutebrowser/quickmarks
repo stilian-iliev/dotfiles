@@ -1,0 +1,3 @@
+defaultapps https://wiki.archlinux.org/title/default_applications
+mime https://gitlab.com/mikhailnov/nastr/blob/master/xdg-settings/mimeapps.list
+chatgpt https://chat.openai.com/chat#
