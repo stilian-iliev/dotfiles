@@ -58,16 +58,11 @@ bar = Bar([
         foreground=gruvbox['yellow']
     ),
 
-    left_arrow(gruvbox['fg2'], gruvbox['fg3']),
+    # left_arrow(gruvbox['fg2'], gruvbox['fg3']),
 
-    KeyboardLayout(configured_keyboards=['us', 'bg'],
-        background=gruvbox['fg3'],
-        foreground=gruvbox['dark-blue']),
 
-    Volume(background=gruvbox['fg3'],
-        foreground=gruvbox['dark-blue']),
 
-    left_arrow(gruvbox['fg3'], gruvbox['bg0']),
+    left_arrow(gruvbox['fg2'], gruvbox['bg0']),
     Clock(
         background=gruvbox['bg0'],
         foreground=gruvbox['dark-magenta'],
@@ -75,6 +70,13 @@ bar = Bar([
     ),
 
     left_arrow(gruvbox['bg0'], gruvbox['fg0']),
+        KeyboardLayout(configured_keyboards=['us', 'bg'],
+        background=gruvbox['fg0'],
+        foreground=gruvbox['dark-blue']),
+
+    Volume(background=gruvbox['fg0'],
+        foreground=gruvbox['dark-blue']),
+
     Systray(
         background=gruvbox['fg0']
     ),
