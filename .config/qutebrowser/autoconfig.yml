@@ -14,6 +14,8 @@ settings:
     global: 0
   colors.webpage.preferred_color_scheme:
     global: dark
+  content.autoplay:
+    global: false
   content.blocking.method:
     global: both
   content.notifications.enabled:
