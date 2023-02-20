@@ -27,6 +27,7 @@ from bar1s import bar_small
 
 mod = "mod4"
 terminal = "kitty"
+myfont = "TerminessTTF Nerd Font"
 # terminal = guess_terminal()
 
 keys = [
@@ -43,7 +44,7 @@ keys = [
     Key([mod], "d", lazy.spawn('discord'), desc="Launch discord"),
     Key([mod], "s", lazy.spawn('obs'), desc="Launch OBS"),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
-    Key([mod], "q", lazy.spawn('gksu yast2')),
+    Key([mod], "q", lazy.spawn('xdg-su -c yast2')),
 
     Key(["mod1", "shift"], "space", lazy.widget["keyboardlayout"].next_keyboard(), desc="Next keyboard layout."),
 
@@ -52,22 +53,24 @@ keys = [
     #     desc="Spawn a command using a prompt widget"),ьььь
 
     # DmenuRun
-    Key([mod], 'r', lazy.run_extension(DmenuRun(
-        font="TerminessTTF Nerd Font",
-        fontsize="13",
-        dmenu_command="dmenu_run",
-        dmenu_prompt=" ",
+    # Key([mod], 'r', lazy.run_extension(DmenuRun(
+        # font=myfont,
+        # fontsize="13",
+        # dmenu_command="j4-dmenu-desktop",
+        # dmenu_prompt=" ",
         # dmenu_height=10,
-        dmenu_lines=15,
-        background=gruvbox['bg'],
-        foreground=gruvbox['fg'],
-        selected_foreground=gruvbox['dark-blue'],
-        selected_background=gruvbox['bg'],
-    ))),
+        # dmenu_lines=15,
+        # background=gruvbox['bg'],
+        # foreground=gruvbox['fg'],
+        # selected_foreground=gruvbox['dark-blue'],
+        # selected_background=gruvbox['bg'],
+    # ))),q
+
+    Key([mod], "r", lazy.spawn(f"j4-dmenu-desktop --dmenu=\"dmenu -l 15 -i -fn \'{myfont}-12\' -nb \'{gruvbox['bg']}\' -nf \'{gruvbox['fg']}\' -sb \'{gruvbox['bg']}\' -sf \'{gruvbox['dark-blue']}\'\" --term=\"kitty\"")),
 
     Key([mod, "shift"], 'w', lazy.run_extension(WindowList(
         all_groups=True,
-        font="TerminessTTF Nerd Font",
+        font=myfont,
         fontsize="13",
         dmenu_prompt=" ",
         # dmenu_height=10,
@@ -147,21 +150,22 @@ keys = [
     Key([mod, "shift"], "space", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod, "shift"], "c", lazy.window.kill(), desc="Kill focused window"),
 
-
 ]
 
 groups = [
     Group('1', label="一", matches=[
           Match(wm_class='firefox'), Match(wm_class='brave'), Match(wm_class='qutebrowser')], layout="stack"),
     Group('2', label="二", layout="monadtall"),
-    Group('3', label="三", layout="columns"),
+    Group('3', label="三", matches=[
+          Match(wm_class='nnn'), Match(wm_class='ranger'), Match(wm_class='thunar')], layout="columns"),
     Group('4', label="四", matches=[
-          Match(wm_class='discord'), Match(wm_class='zoom'), Match(wm_class="teams-for-linux")], layout="stack"),
-    Group('5', label="五", matches=[Match(wm_class="Spotify")], layout="stack"),
+          Match(wm_class='discord'), Match(wm_class='zoom'), Match(wm_class="teams-for-linux"), Match(wm_class="Spotify")], layout="stack"),
+    Group('5', label="五", layout="stack"),
     Group('6', label="六", layout="monadtall"),
     Group('7', label="七", layout="monadtall"),
     Group('8', label="八", layout="monadtall"),
-    Group('9', label="九", layout="monadtall"),
+    Group('9', label="九", matches=[
+          Match(wm_class='lutris'), Match(wm_class='steam'), Match(title="V League of Legends"), Match(title="V Riot Client Main")], layout="monadtall", screen_affinity="0"),
 ]
 
 
@@ -226,29 +230,29 @@ layouts = [
     )
 ]
 
-floating_layout = Floating(
-    border_normal=gruvbox['bg0'],
-    border_focus=gruvbox['magenta'],
-    border_width=2,
-    float_rules=[
-        *Floating.default_float_rules,
-        Match(wm_class='confirmreset'),  # gitk
-        Match(wm_class='makebranch'),  # gitk
-        Match(wm_class='maketag'),  # gitk
-        Match(wm_class='ssh-askpass'),  # ssh-askpass
-        Match(title='branchdialog'),  # gitk
-        Match(title='pinentry'),  # GPG key password entry
+# floating_layout = Floating(
+#     border_normal=gruvbox['bg0'],
+#     border_focus=gruvbox['magenta'],
+#     border_width=2,
+#     float_rules=[
+#         *Floating.default_float_rules,
+#         Match(wm_class='confirmreset'),  # gitk
+#         Match(wm_class='makebranch'),  # gitk
+#         Match(wm_class='maketag'),  # gitk
+#         Match(wm_class='ssh-askpass'),  # ssh-askpass
+#         Match(title='branchdialog'),  # gitk
+#         Match(title='pinentry'),  # GPG key password entry
 
-        Match(title="Android Emulator - pixel5:5554"),
-        Match(wm_class="Genymotion Player"),
-        Match(title="AICOMS"),
-        Match(wm_class="blueman-manager"),
-        Match(wm_class="pavucontrol"),
-        Match(wm_class="zoom "),
-        Match(wm_class="bitwarden"),
-        Match(wm_class="nemo"),
-        Match(wm_class="xarchiver"),
-    ])
+#         Match(title="Android Emulator - pixel5:5554"),
+#         Match(wm_class="Genymotion Player"),
+#         Match(title="AICOMS"),
+#         Match(wm_class="blueman-manager"),
+#         Match(wm_class="pavucontrol"),
+#         Match(wm_class="zoom "),
+#         Match(wm_class="bitwarden"),
+#         Match(wm_class="nemo"),
+#         Match(wm_class="xarchiver"),
+#     ])
 
 # Drag floating layouts.
 mouse = [
@@ -256,10 +260,10 @@ mouse = [
          start=lazy.window.get_position()),
     Drag([mod], "Button3", lazy.window.set_size_floating(),
          start=lazy.window.get_size()),
-    Click([mod], "Button2", lazy.window.bring_to_front())
+    Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
 widget_defaults = dict(
-    font='TerminessTTF Nerd Font',
+    font=myfont,
     fontsize=13,
     padding=10,
     foreground=gruvbox['bg'],
@@ -309,4 +313,9 @@ follow_mouse_focus = False
 #     Group(""),
 # ]
 
-# browser, terminal, ranger-monadtall, discord, vim-stack, steam/lutris-stack/league, home, imageviewer/documentviewer
+# browser, terminal, ranger-monadtall, discord/spotify, vim-stack, steam/lutris-stack/league-stack, home, imageviewer/documentviewer
+# binds to open discord, lutris, steam, vim, ranger
+
+# rules = [
+#     Match(wm_class="myapp", float=False),
+# ]
