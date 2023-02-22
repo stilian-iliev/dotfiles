@@ -24,3 +24,5 @@ settings:
     global: TerminessTTF Nerd Font
   fonts.default_size:
     global: 12pt
+  input.media_keys:
+    global: false

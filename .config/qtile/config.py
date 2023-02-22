@@ -1,5 +1,4 @@
 import os
-import psutil
 import subprocess
 from typing import Callable, List  # noqa: F401
 
@@ -43,13 +42,14 @@ keys = [
     Key([mod], "e", lazy.spawn('kitty --title="ranger" ranger'),
         desc="Launch ranger in home directory"),
     Key([mod], "d", lazy.spawn('discord'), desc="Launch discord", ),
-    Key([mod], "a", lazy.spawn('kitty --title="htop" htop'), desc="Launch htop"),
-    Key([mod], "s", lazy.spawn('lutris'), desc="Launch lutris"),
+    Key([mod], "s", lazy.spawn('kitty --title="htop" htop'), desc="Launch htop"),
+    # Key([mod], "s", lazy.spawn('lutris'), desc="Launch lutris"),
     Key([mod], "a", lazy.spawn(terminal), desc="Launch terminal"),
     Key([mod], "Return", lazy.spawn('kitty sudo yast2')),
 
     Key(["mod1", "shift"], "space", lazy.widget["keyboardlayout"].next_keyboard(), desc="Next keyboard layout."),
 
+    
     # Command prompt
     # Key([mod], "p", lazy.spawncmd(),
     #     desc="Spawn a command using a prompt widget"),
@@ -151,7 +151,19 @@ keys = [
     # Toggle between different layouts as defined below
     Key([mod, "shift"], "space", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
+    
+    # Media keys
+    Key([], "XF86AudioLowerVolume", lazy.spawn("amixer sset Master 5%-"), desc="Lower Volume by 5%"),
 
+    Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer sset Master 5%+"), desc="Raise Volume by 5%"),
+
+    Key([], "XF86AudioMute", lazy.spawn("amixer sset Master 1+ toggle"), desc="Mute/Unmute Volume"),
+
+    Key([], "XF86AudioPlay", lazy.spawn("playerctl play-pause"), desc="Play/Pause player"),
+
+    Key([], "XF86AudioNext", lazy.spawn("playerctl next"), desc="Skip to next"),
+
+    Key([], "XF86AudioPrev", lazy.spawn("playerctl previous"), desc="Skip to previous"),
 ]
 
 groups = [
@@ -169,7 +181,6 @@ groups = [
           Match(wm_class='lutris'), Match(wm_class='steam'), Match(title="V League of Legends"), Match(title="V Riot Client Main")
           ], layout="monadtall", screen_affinity="0"),
 ]
-
 
 for i in groups:
     keys.extend([
@@ -197,10 +208,10 @@ groups.append(ScratchPad('scratchpad', [
 ]))
 # extend keys list with keybinding for scratchpad
 keys.extend([
-    Key(["mod1"], "1", lazy.group['scratchpad'].dropdown_toggle('term')),
-    Key(["mod1"], "2", lazy.group['scratchpad'].dropdown_toggle('ranger')),
-    Key(["mod1"], "3", lazy.group['scratchpad'].dropdown_toggle('htop')),
-    Key(["mod1"], "4", lazy.group['scratchpad'].dropdown_toggle('mixer')),
+    Key(["mod1"], "a", lazy.group['scratchpad'].dropdown_toggle('term')),
+    Key(["mod1"], "e", lazy.group['scratchpad'].dropdown_toggle('ranger')),
+    Key(["mod1"], "s", lazy.group['scratchpad'].dropdown_toggle('htop')),
+    Key(["mod1"], "m", lazy.group['scratchpad'].dropdown_toggle('mixer')),
 ])
 
 layouts = [
@@ -285,7 +296,7 @@ screens = [
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: List
 follow_mouse_focus = True
-bring_front_click = ''
+# bring_front_click = ''
 cursor_warp = False
 auto_fullscreen = True
 focus_on_window_activation = "smart"
