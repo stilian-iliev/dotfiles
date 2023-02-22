@@ -70,7 +70,7 @@ bar = Bar([
     ),
 
     left_arrow(gruvbox['bg0'], gruvbox['fg0']),
-        KeyboardLayout(configured_keyboards=['us', 'bg'],
+        KeyboardLayout(configured_keyboards=['us', 'bg bas_phonetic'],
         background=gruvbox['fg0'],
         foreground=gruvbox['dark-blue']),
 
