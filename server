@@ -1,6 +1,6 @@
 pc
 	reinstall tubmleweed
-		qtile
+		xwayland qtile
 
 server
 	docker

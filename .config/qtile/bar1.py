@@ -71,6 +71,7 @@ bar = Bar([
 
     left_arrow(gruvbox['bg0'], gruvbox['fg0']),
         KeyboardLayout(configured_keyboards=['us', 'bg bas_phonetic'],
+        display_map={'us':'US', 'bg bas_phonetic':'BG'},
         background=gruvbox['fg0'],
         foreground=gruvbox['dark-blue']),
 
