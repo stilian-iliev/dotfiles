@@ -45,7 +45,7 @@ keys = [
     Key([mod], "s", lazy.spawn('kitty --title="htop" htop'), desc="Launch htop"),
     # Key([mod], "s", lazy.spawn('lutris'), desc="Launch lutris"),
     Key([mod], "a", lazy.spawn(terminal), desc="Launch terminal"),
-    Key([mod], "Return", lazy.spawn('kitty sudo yast2')),
+    Key([mod], "Return", lazy.spawn('kitty sudo yast2')),    
 
     Key(["mod1", "shift"], "space", lazy.widget["keyboardlayout"].next_keyboard(), desc="Next keyboard layout."),
 
@@ -170,13 +170,13 @@ groups = [
     Group('1', label="一", matches=[
           Match(wm_class='firefox'), Match(wm_class='brave'), Match(wm_class='qutebrowser')], layout="stack"),
     Group('2', label="二", layout="monadtall"),
-    Group('3', label="三", matches=[Match(title="htop"), Match(title="ranger")], layout="columns"),
+    Group('3', label="三", matches=[Match(title="htop"), Match(title="ranger")], layout="stack"),
     Group('4', label="四", matches=[
-          Match(wm_class='discord'), Match(wm_class='zoom'), Match(wm_class="teams-for-linux"), Match(wm_class="Spotify")], layout="stack"),
-    Group('5', label="五", matches=[], layout="stack"),
+          Match(wm_class='discord'), Match(wm_class='zoom'), Match(wm_class="teams-for-linux")], layout="stack"),
+    Group('5', label="五", matches=[Match(wm_class="Spotify")], layout="stack"),
     Group('6', label="六", layout="monadtall"),
     Group('7', label="七", layout="monadtall"),
-    Group('8', label="八", layout="monadtall"),
+    Group('8', label="八", layout="stack"),
     Group('9', label="九", matches=[
           Match(wm_class='lutris'), Match(wm_class='steam'), Match(title="V League of Legends"), Match(title="V Riot Client Main")
           ], layout="monadtall", screen_affinity="0"),
@@ -203,6 +203,7 @@ groups.append(ScratchPad('scratchpad', [
     DropDown('term', 'kitty', width=0.4, height=0.5, x=0.3, y=0.1, opacity=1),
     DropDown('ranger', 'kitty ranger', width=0.4, height=0.5, x=0.3, y=0.1, opacity=1),
     DropDown('htop', 'kitty htop', width=0.4, height=0.5, x=0.3, y=0.1, opacity=1),
+    # DropDown('mdt', 'kitty mdt', width=0.4, height=0.5, x=0.3, y=0.1, opacity=1),
     DropDown('mixer', 'pavucontrol', width=0.4,
              height=0.6, x=0.3, y=0.1, opacity=1),
 ]))
@@ -212,6 +213,7 @@ keys.extend([
     Key(["mod1"], "e", lazy.group['scratchpad'].dropdown_toggle('ranger')),
     Key(["mod1"], "s", lazy.group['scratchpad'].dropdown_toggle('htop')),
     Key(["mod1"], "m", lazy.group['scratchpad'].dropdown_toggle('mixer')),
+    # Key(["mod1"], "t", lazy.group['scratchpad'].dropdown_toggle('mdt')),
 ])
 
 layouts = [
