@@ -9,9 +9,8 @@ from libqtile.extension.window_list import WindowList
 from libqtile.extension.command_set import CommandSet
 
 # import layout objects
-from libqtile.layout.columns import Columns
+from libqtile.layout.max import Max
 from libqtile.layout.xmonad import MonadTall, MonadWide
-from libqtile.layout.stack import Stack
 from libqtile.layout.floating import Floating
 
 # import widgets and bar
@@ -28,6 +27,7 @@ from bar1s import bar_small
 mod = "mod4"
 terminal = "kitty"
 myfont = "TerminessTTF Nerd Font"
+wallpaper = "1651314815321.jpg"
 # terminal = guess_terminal()
 
 keys = [
@@ -102,8 +102,8 @@ keys = [
     # Toggle floating and fullscreen
     Key([mod], "f", lazy.window.toggle_fullscreen(),
         desc="Toggle fullscreen mode"),
-    # Key([mod], "space", lazy.window.toggle_floating(),
-    #     desc="Toggle fullscreen mode"),
+    Key([mod, "shift"], "f", lazy.window.toggle_floating(),
+        desc="Toggle fullscreen mode"),
 
     # Keybindings for resizing windows in MonadTall layout
     Key([mod], "i", lazy.layout.grow()),
@@ -138,8 +138,8 @@ keys = [
         desc="Grow window to the right"),
     Key([mod, "control"], "j", lazy.layout.grow_down(),
         desc="Grow window down"),
-    # Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
-    # Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
+    Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
+    Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
 
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
@@ -207,6 +207,7 @@ groups.append(ScratchPad('scratchpad', [
     DropDown('mixer', 'pavucontrol', width=0.4,
              height=0.6, x=0.3, y=0.1, opacity=1),
 ]))
+
 # extend keys list with keybinding for scratchpad
 keys.extend([
     Key(["mod1"], "a", lazy.group['scratchpad'].dropdown_toggle('term')),
@@ -217,11 +218,10 @@ keys.extend([
 ])
 
 layouts = [
-    Stack(
+    Max(
         border_normal=gruvbox['dark-gray'],
         border_focus=gruvbox['cyan'],
-        border_width=2,
-        num_stacks=1,
+        border_width=1,
         margin=8,
     ),
     MonadTall(
@@ -231,17 +231,9 @@ layouts = [
         border_width=2,
         single_border_width=1,
         single_margin=8,
+        new_client_position='bottom',
+        ratio=0.65,
     ),
-    Columns(
-        border_normal=gruvbox['dark-gray'],
-        border_focus=gruvbox['cyan'],
-        border_width=2,
-        border_normal_stack=gruvbox['dark-gray'],
-        border_focus_stack=gruvbox['dark-green'],
-        border_on_single=2,
-        margin=8,
-        margin_on_single=8,
-    )
 ]
 
 floating_layout = Floating(
@@ -266,7 +258,6 @@ floating_layout = Floating(
         Match(wm_class="bitwarden"),
         Match(wm_class="nemo"),
         Match(wm_class="xarchiver"),
-        # Match(wm_class="League of Legends"),
     ])
 
 # Drag floating layouts.
@@ -288,10 +279,10 @@ extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(top=bar,
-    wallpaper='~/.config/qtile/1651314815321.jpg',
+    wallpaper='~/.config/qtile/{wallpaper}',
     wallpaper_mode='stretch'),
     Screen(top=bar_small,
-    wallpaper='~/.config/qtile/1651314815321.jpg',
+    wallpaper='~/.config/qtile/{wallpaper}',
     wallpaper_mode='fill')
 ]
 
