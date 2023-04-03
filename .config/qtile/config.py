@@ -279,10 +279,10 @@ extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(top=bar,
-    wallpaper='~/.config/qtile/{wallpaper}',
+    wallpaper=f'~/.config/qtile/{wallpaper}',
     wallpaper_mode='stretch'),
     Screen(top=bar_small,
-    wallpaper='~/.config/qtile/{wallpaper}',
+    wallpaper=f'~/.config/qtile/{wallpaper}',
     wallpaper_mode='fill')
 ]
 
