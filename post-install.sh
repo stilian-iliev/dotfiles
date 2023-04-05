@@ -15,4 +15,11 @@ opi spotify-adblock
 opi j4-dmenu-desktop
 
 opi cpu-x
- 
+
+opi qt5-webengine-widevine
+
+# Moving config files
+
+cp -r .config ~/
+
+cp -r .fonts ~/ 
