@@ -177,9 +177,7 @@ groups = [
     Group('6', label="六", layout="monadtall"),
     Group('7', label="七", layout="monadtall"),
     Group('8', label="八", layout="stack"),
-    Group('9', label="九", matches=[
-          Match(wm_class='lutris'), Match(wm_class='steam'), Match(title="V League of Legends"), Match(title="V Riot Client Main")
-          ], layout="monadtall", screen_affinity="0"),
+    Group('9', label="九", layout="monadtall", screen_affinity="0"),
 ]
 
 for i in groups:

@@ -19,7 +19,8 @@ settings:
   content.blocking.method:
     global: both
   content.geolocation:
-    global: false
+    global: ask
+    https://tinder.com: true
     https://www.google.com: false
   content.javascript.can_access_clipboard:
     global: true
