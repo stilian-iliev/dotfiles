@@ -25,9 +25,10 @@ from bar1 import bar
 from bar1s import bar_small
 
 mod = "mod4"
-terminal = "kitty"
+terminal = "alacritty"
 myfont = "TerminessTTF Nerd Font"
-wallpaper = "1651314815321.jpg"
+# wallpaper = "1651314815321.jpg"
+wallpaper = "VwnKIERszZC2_16536x0_Dey4K3h6.jpg"
 # terminal = guess_terminal()
 
 keys = [
@@ -39,15 +40,15 @@ keys = [
 
     # Launch applications
     Key([mod], "w", lazy.spawn('qutebrowser'), desc="Launch browser"),
-    Key([mod], "e", lazy.spawn('kitty --title="ranger" ranger'),
+    Key([mod], "e", lazy.spawn(f'{terminal} -T "ranger" -e ranger'),
         desc="Launch ranger in home directory"),
     Key([mod], "d", lazy.spawn('discord'), desc="Launch discord", ),
-    Key([mod], "s", lazy.spawn('kitty --title="htop" htop'), desc="Launch htop"),
+    Key([mod], "s", lazy.spawn('f{terminal} -T "htop" -e htop'), desc="Launch htop"),
     # Key([mod], "s", lazy.spawn('lutris'), desc="Launch lutris"),
     Key([mod], "a", lazy.spawn(terminal), desc="Launch terminal"),
-    Key([mod], "Return", lazy.spawn('kitty sudo yast2')),    
+    Key([mod], "Return", lazy.spawn(f'{terminal} sudo yast2')),    
 
-    Key(["mod1", "shift"], "space", lazy.widget["keyboardlayout"].next_keyboard(), desc="Next keyboard layout."),
+    Key(["shift"], "Alt_L", lazy.widget["keyboardlayout"].next_keyboard(), desc="Next keyboard layout."),
 
     
     # Command prompt
@@ -85,10 +86,10 @@ keys = [
 
     Key([mod, "control"], 'n', lazy.run_extension(CommandSet(
         commands={
-            'Thesis notes': 'kitty nvim Neorg/Notes/Thesis/index.norg',
-            'Dev notes': 'kitty nvim Neorg/Notes/Dev/index.norg',
-            'JWL notes': 'kitty nvim Neorg/Notes/JWL/index.norg',
-            'YouTube notes': 'kitty nvim Neorg/YT/index.norg',
+            'Thesis notes': f'{terminal} nvim Neorg/Notes/Thesis/index.norg',
+            'Dev notes': f'{terminal} nvim Neorg/Notes/Dev/index.norg',
+            'JWL notes': f'{terminal} nvim Neorg/Notes/JWL/index.norg',
+            'YouTube notes': f'{terminal} nvim Neorg/YT/index.norg',
         },
         background=gruvbox['bg'],
         foreground=gruvbox['fg'],
@@ -198,10 +199,10 @@ for i in groups:
 
 # Append scratchpad with dropdowns to groups
 groups.append(ScratchPad('scratchpad', [
-    DropDown('term', 'kitty', width=0.4, height=0.5, x=0.3, y=0.1, opacity=1),
-    DropDown('ranger', 'kitty ranger', width=0.4, height=0.5, x=0.3, y=0.1, opacity=1),
-    DropDown('htop', 'kitty htop', width=0.4, height=0.5, x=0.3, y=0.1, opacity=1),
-    # DropDown('mdt', 'kitty mdt', width=0.4, height=0.5, x=0.3, y=0.1, opacity=1),
+    DropDown('term', terminal, width=0.4, height=0.5, x=0.3, y=0.1, opacity=1),
+    DropDown('ranger', f'{terminal} ranger', width=0.4, height=0.5, x=0.3, y=0.1, opacity=1),
+    DropDown('htop', f'{terminal} htop', width=0.4, height=0.5, x=0.3, y=0.1, opacity=1),
+    # DropDown('mdt', f'{terminal} mdt', width=0.4, height=0.5, x=0.3, y=0.1, opacity=1),
     DropDown('mixer', 'pavucontrol', width=0.4,
              height=0.6, x=0.3, y=0.1, opacity=1),
 ]))

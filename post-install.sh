@@ -5,7 +5,7 @@
 read -p "Install packages?(y/n)" pcg
 if [ $pcg = "y" ] 
 then
-	sudo zypper install qutebrowser xviewer discord steam mpv htop neofetch ranger kitty wine lutris picom redshift xarchiver opi 7zip libreoffice xrandr xset xinput sensors pavucontrol playerctl python310-adblock cpu-x dmenu
+	sudo zypper install qutebrowser xviewer discord steam mpv htop neofetch ranger wine lutris picom redshift xarchiver opi 7zip libreoffice xrandr xset xinput sensors pavucontrol playerctl python310-adblock cpu-x dmenu
 fi
 
 read -p "Install spotify? (y/n)" spotify
