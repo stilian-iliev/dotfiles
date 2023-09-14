@@ -5,7 +5,11 @@
 read -p "Install packages?(y/n)" pcg
 if [ $pcg = "y" ] 
 then
-	sudo zypper install qutebrowser xviewer discord steam mpv htop neofetch ranger wine lutris picom redshift xarchiver opi 7zip libreoffice xrandr xset xinput sensors pavucontrol playerctl python310-adblock cpu-x dmenu
+	sudo zypper install alacritty parcellite qutebrowser xviewer discord steam mpv htop neofetch ranger wine lutris picom redshift opi 7zip libreoffice xrandr xset xinput sensors pavucontrol playerctl python311-adblock cpu-x dmenu
+	opi xarchiver
+	opi j4-dmenu-desktop
+	opi qt5-webengine-widevine
+
 fi
 
 read -p "Install spotify? (y/n)" spotify
@@ -16,10 +20,6 @@ then
 	spotify-easyrpm
 	opi spotify-adblock
 fi
-
-opi j4-dmenu-desktop
-
-opi qt5-webengine-widevine
 
 # Moving config files
 

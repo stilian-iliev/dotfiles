@@ -49,7 +49,7 @@ keys = [
     Key([mod], "Return", lazy.spawn(f'{terminal} sudo yast2')),    
 
     Key(["shift"], "Alt_L", lazy.widget["keyboardlayout"].next_keyboard(), desc="Next keyboard layout."),
-
+    Key([], "Print", lazy.spawn('xfce4-screenshooter'), desc="Launch xfce4-screenshooter"),
     
     # Command prompt
     # Key([mod], "p", lazy.spawncmd(),

@@ -14,5 +14,3 @@ test -s ~/.alias && . ~/.alias || true
 
 export PATH="/home/stili/anaconda3/bin:$PATH"
 
-export MDT_INBOX=/home/stili/.tasks/inbox
-export MDT_DIR=/home/stili/.tasks

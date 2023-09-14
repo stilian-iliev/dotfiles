@@ -15,7 +15,7 @@ xset s off
 xset -dpms
 
 redshift &
-
+parcellite &
 #~/.fehbg &
 #nm-applet &
 #mictray &
