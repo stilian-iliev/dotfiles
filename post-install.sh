@@ -5,11 +5,17 @@
 read -p "Install packages?(y/n)" pcg
 if [ $pcg = "y" ] 
 then
-	sudo zypper install alacritty parcellite qutebrowser xviewer discord steam mpv htop neofetch ranger wine lutris picom redshift opi 7zip libreoffice xrandr xset xinput sensors pavucontrol playerctl python311-adblock cpu-x dmenu
+	sudo zypper install git ueberzugpp alacritty alacarte parcellite qutebrowser xviewer discord steam mpv htop neofetch ranger wine lutris picom redshift opi 7zip libreoffice xrandr xset xinput sensors pavucontrol playerctl python311-adblock cpu-x dmenu
+	git config --global credential.helper store
 	opi xarchiver
 	opi j4-dmenu-desktop
-	opi qt5-webengine-widevine
+	opi qt5-webengine-widevinie
 
+	read -p "Install qtile?(y/n)" qtile
+	if [ $qtile = "y" ]
+	then
+		opi qtile
+		opi python311-psutil
 fi
 
 read -p "Install spotify? (y/n)" spotify

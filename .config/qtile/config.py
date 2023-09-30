@@ -42,7 +42,7 @@ keys = [
     Key([mod], "w", lazy.spawn('qutebrowser'), desc="Launch browser"),
     Key([mod], "e", lazy.spawn(f'{terminal} -T "ranger" -e ranger'),
         desc="Launch ranger in home directory"),
-    Key([mod], "d", lazy.spawn('discord'), desc="Launch discord", ),
+    Key([mod], "d", lazy.spawn('discord'), desc="Launch discord"),
     Key([mod], "s", lazy.spawn('f{terminal} -T "htop" -e htop'), desc="Launch htop"),
     # Key([mod], "s", lazy.spawn('lutris'), desc="Launch lutris"),
     Key([mod], "a", lazy.spawn(terminal), desc="Launch terminal"),
@@ -104,7 +104,7 @@ keys = [
     Key([mod], "f", lazy.window.toggle_fullscreen(),
         desc="Toggle fullscreen mode"),
     Key([mod, "shift"], "f", lazy.window.toggle_floating(),
-        desc="Toggle fullscreen mode"),
+        desc="Toggle floating mode"),
 
     # Keybindings for resizing windows in MonadTall layout
     Key([mod], "i", lazy.layout.grow()),
@@ -129,7 +129,8 @@ keys = [
         desc="Move window to the right"),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(),
         desc="Move window down"),
-    Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
+    Key([mod, "shift"], "k", lazy.layout.shuffle_up(),
+        desc="Move window up"),
 
     # Grow windows. If current window is on the edge of screen and direction
     # will be to screen edge - window would shrink.
@@ -169,15 +170,15 @@ keys = [
 
 groups = [
     Group('1', label="一", matches=[
-          Match(wm_class='firefox'), Match(wm_class='brave'), Match(wm_class='qutebrowser')], layout="stack"),
+          Match(wm_class='firefox'), Match(wm_class='brave'), Match(wm_class='qutebrowser')], layout="max"),
     Group('2', label="二", layout="monadtall"),
-    Group('3', label="三", matches=[Match(title="htop"), Match(title="ranger")], layout="stack"),
+    Group('3', label="三", matches=[Match(title="htop"), Match(title="ranger")], layout="max"),
     Group('4', label="四", matches=[
-          Match(wm_class='discord'), Match(wm_class='zoom'), Match(wm_class="teams-for-linux")], layout="stack"),
-    Group('5', label="五", matches=[Match(wm_class="Spotify")], layout="stack"),
+          Match(wm_class='discord'), Match(wm_class='zoom'), Match(wm_class="teams-for-linux")], layout="max"),
+    Group('5', label="五", matches=[Match(wm_class="Spotify")], layout="max"),
     Group('6', label="六", layout="monadtall"),
     Group('7', label="七", layout="monadtall"),
-    Group('8', label="八", layout="stack"),
+    Group('8', label="八", layout="max"),
     Group('9', label="九", layout="monadtall", screen_affinity="0"),
 ]
 
@@ -189,9 +190,6 @@ for i in groups:
 	
         Key([mod, "control"], i.name, lazy.group[i.name].toscreen(1)),  
 	
-        # Key([mod], i.name, lazy.function(go_to_group(i.name))),
-
-        # Or, use below if you prefer not to switch to that group.
         # mod1 + shift + letter of group = move focused window to group
         Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
             desc="move focused window to group {}".format(i.name)),
@@ -200,9 +198,8 @@ for i in groups:
 # Append scratchpad with dropdowns to groups
 groups.append(ScratchPad('scratchpad', [
     DropDown('term', terminal, width=0.4, height=0.5, x=0.3, y=0.1, opacity=1),
-    DropDown('ranger', f'{terminal} ranger', width=0.4, height=0.5, x=0.3, y=0.1, opacity=1),
-    DropDown('htop', f'{terminal} htop', width=0.4, height=0.5, x=0.3, y=0.1, opacity=1),
-    # DropDown('mdt', f'{terminal} mdt', width=0.4, height=0.5, x=0.3, y=0.1, opacity=1),
+    DropDown('ranger', f'{terminal} -e ranger', width=0.4, height=0.5, x=0.3, y=0.1, opacity=1),
+    DropDown('htop', f'{terminal} -e htop', width=0.4, height=0.5, x=0.3, y=0.1, opacity=1),
     DropDown('mixer', 'pavucontrol', width=0.4,
              height=0.6, x=0.3, y=0.1, opacity=1),
 ]))
@@ -213,7 +210,6 @@ keys.extend([
     Key(["mod1"], "e", lazy.group['scratchpad'].dropdown_toggle('ranger')),
     Key(["mod1"], "s", lazy.group['scratchpad'].dropdown_toggle('htop')),
     Key(["mod1"], "m", lazy.group['scratchpad'].dropdown_toggle('mixer')),
-    # Key(["mod1"], "t", lazy.group['scratchpad'].dropdown_toggle('mdt')),
 ])
 
 layouts = [

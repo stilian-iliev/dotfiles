@@ -1,6 +1,5 @@
 #!/bin/sh
 
-#xinput --set-prop "Wings Tech Xtrfy M42" "Coordinate Transformation Matrix" 0.5 0 0 0 0.5 0 0 0 1
 xinput set-prop 'Wings Tech Xtrfy M42' 'libinput Accel Speed' -0.75
 
 xrandr --auto --output HDMI-A-0 --mode 1280x1024 --left-of DisplayPort-0
